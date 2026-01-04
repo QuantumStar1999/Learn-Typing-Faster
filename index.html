@@ -54,6 +54,35 @@
                             <input type="range" min="50" max="200" value="100" class="sound-slider" id="speedSlider">
                         </div>
                         
+                        <!-- Add this inside the sound-panel div, after the existing sound-slider-container sections -->
+                        <div class="sound-divider">
+                            <span>Background Typing Sound</span>
+                        </div>
+
+                        <div class="sound-slider-container">
+                            <div class="sound-slider-label">
+                                <i class="fas fa-volume-up"></i> BG Volume
+                                <span class="sound-value" id="bgVolumeValue">50%</span>
+                            </div>
+                            <input type="range" min="0" max="100" value="50" class="sound-slider" id="bgVolumeSlider">
+                        </div>
+
+                        <div class="sound-slider-container">
+                            <div class="sound-slider-label">
+                                <i class="fas fa-tachometer-alt"></i> BG Speed
+                                <span class="sound-value" id="bgSpeedValue">1.0x</span>
+                            </div>
+                            <input type="range" min="50" max="200" value="100" class="sound-slider" id="bgSpeedSlider">
+                        </div>
+
+                        <div class="sound-toggle-group">
+                            <label class="sound-toggle-label">
+                                <input type="checkbox" id="bgSoundToggle" checked>
+                                <span class="sound-toggle-slider"></span>
+                                <span class="sound-toggle-text">Enable Background Sound</span>
+                            </label>
+                        </div>
+
                         <div class="sound-buttons">
                             <button class="sound-preset-btn" data-preset="quiet">Quiet</button>
                             <button class="sound-preset-btn" data-preset="normal">Normal</button>
