@@ -732,7 +732,6 @@ function displayWpmHistory(currentWpm) {
     if (history.length > 0) {
         const clearButton = document.createElement('button');
         clearButton.className = 'clear-history-btn';
-        // if(!document.getElementsById("trash-button"))
         clearButton.innerHTML = '<i class="fas fa-trash-alt" id="trash-button"></i> Clear History';
         clearButton.onclick = clearWpmHistory;
         
