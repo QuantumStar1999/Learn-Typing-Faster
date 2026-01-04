@@ -732,7 +732,7 @@ function displayWpmHistory(currentWpm) {
     if (history.length > 0) {
         const clearButton = document.createElement('button');
         clearButton.className = 'clear-history-btn';
-        clearButton.innerHTML = '<i class="fas fa-trash-alt" id="trash-button"></i> Clear History';
+        clearButton.innerHTML = '<i class="fas fa-trash-alt"></i> Clear History';
         clearButton.onclick = clearWpmHistory;
         
         // Insert after graph stats
