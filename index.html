@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-keyboard"></i> Typing Test</h1>
+            <p class="subtitle">Test your typing speed and accuracy with this colorful, interactive typing challenge. Adjust timer, toggle backspace, and see your detailed results!</p>
+        </header>
+
+        <div class="controls">
+            <div class="timer-section">
+                <div class="timer" id="timer">05:00</div>
+                <div class="timer-options">
+                    <button class="timer-btn" data-time="1">1 min</button>
+                    <button class="timer-btn active" data-time="5">5 min</button>
+                    <button class="timer-btn" data-time="10">10 min</button>
+                    <button class="timer-btn" data-time="15">15 min</button>
+                </div>
+            </div>
+
+            <!-- Add this after the backspace-toggle div in the controls section -->
+            <div class="sound-controls">
+                <button class="sound-btn" id="soundToggle">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                
+                <div class="sound-panel" id="soundPanel">
+                    <div class="sound-control-group">
+                        <div class="sound-control-header">
+                            <i class="fas fa-sliders-h"></i> Sound Settings
+                        </div>
+                        
+                        <div class="sound-slider-container">
+                            <div class="sound-slider-label">
+                                <i class="fas fa-volume-up"></i> Volume
+                                <span class="sound-value" id="volumeValue">70%</span>
+                            </div>
+                            <input type="range" min="0" max="100" value="70" class="sound-slider" id="volumeSlider">
+                        </div>
+                        
+                        <div class="sound-slider-container">
+                            <div class="sound-slider-label">
+                                <i class="fas fa-tachometer-alt"></i> Speed
+                                <span class="sound-value" id="speedValue">1.0x</span>
+                            </div>
+                            <input type="range" min="50" max="200" value="100" class="sound-slider" id="speedSlider">
+                        </div>
+                        
+                        <div class="sound-buttons">
+                            <button class="sound-preset-btn" data-preset="quiet">Quiet</button>
+                            <button class="sound-preset-btn" data-preset="normal">Normal</button>
+                            <button class="sound-preset-btn" data-preset="fast">Fast</button>
+                        </div>
+                        
+                        <div class="sound-test">
+                            <button class="sound-test-btn" id="testSound">
+                                <i class="fas fa-play"></i> Test Sound
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="backspace-toggle">
+                <span>Backspace:</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="backspaceToggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+                <span id="backspaceStatus" class="highlight">ON</span>
+            </div>
+        </div>
+
+        
+
+        <div class="main-content">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-bullseye"></i> Word to Type</h2>
+                <div class="word-display">
+                    <div class="current-word" id="currentWord">Initialize</div>
+                </div>
+                <div class="word-input-container">
+                    <input type="text" class="word-input" id="wordInput" placeholder="Start typing here... (Press SPACE for next word)" autocomplete="off">
+                    <p class="instructions">Type the word above and press <span class="highlight">SPACEBAR</span> to move to the next word. Timer starts with your first keystroke.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-pencil-alt"></i> Typing Area</h2>
+                <div class="typing-area">
+                    <div class="typed-text" id="typedText">
+                        <!-- Typed words will appear here -->
+                    </div>
+                </div>
+                <p class="instructions">Your typed words appear here. <span class="correct">Green</span> = correct, <span class="incorrect">Red</span> = incorrect.</p>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <div class="result-card" style="border-top: 5px solid #4f46e5;">
+                <div class="result-value" id="totalChars">0</div>
+                <div class="result-label">Total Characters</div>
+            </div>
+            <div class="result-card" style="border-top: 5px solid #10b981;">
+                <div class="result-value" id="correctChars">0</div>
+                <div class="result-label">Correct Characters</div>
+            </div>
+            <div class="result-card" style="border-top: 5px solid #ef4444;">
+                <div class="result-value" id="incorrectChars">0</div>
+                <div class="result-label">Incorrect Characters</div>
+            </div>
+            <div class="result-card" style="border-top: 5px solid #f59e0b;">
+                <div class="result-value" id="correctWords">0</div>
+                <div class="result-label">Correct Words</div>
+            </div>
+            <div class="result-card" style="border-top: 5px solid #8b5cf6;">
+                <div class="result-value" id="wpm">0</div>
+                <div class="result-label">Words Per Minute</div>
+            </div>
+        </div>
+
+        <!-- Add WPM Graph Container -->
+            <div class="result-card result-graph" style="border-top: 5px solid #10b981; grid-column: span 2;">
+                <h3 style="margin-bottom: 15px; color: var(--primary);">
+                    <i class="fas fa-chart-line"></i> WPM Progress Over Time
+                </h3>
+                <div class="chart-container">
+                    <canvas id="wpmChart"></canvas>
+                </div>
+                <div class="graph-stats">
+                    <div class="graph-stat">
+                        <span class="graph-stat-label">Best:</span>
+                        <span class="graph-stat-value" id="bestWpm">0</span>
+                    </div>
+                    <div class="graph-stat">
+                        <span class="graph-stat-label">Average:</span>
+                        <span class="graph-stat-value" id="avgWpm">0</span>
+                    </div>
+                    <div class="graph-stat">
+                        <span class="graph-stat-label">Latest:</span>
+                        <span class="graph-stat-value" id="latestWpm">0</span>
+                    </div>
+                    <div class="graph-stat">
+                        <span class="graph-stat-label">Tests:</span>
+                        <span class="graph-stat-value" id="totalTests">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="restart-btn" id="restartBtn">
+            <i class="fas fa-redo-alt"></i> Restart Test
+        </button>
+
+        <footer>
+            <p>Created with <i class="fas fa-heart" style="color:#ef4444;"></i> | Words from English Dictionary | 5 characters = 1 word for WPM calculation</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
