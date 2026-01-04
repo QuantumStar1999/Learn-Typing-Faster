@@ -801,6 +801,9 @@ function endGame() {
     gameState.timerActive = false;
     gameState.isGameOver = true;
     wordInput.disabled = true;
+
+    // Stop background sound when test ends
+    SoundManager.stopBackgroundOnTestEnd();
     
     // Calculate WPM (5 correct characters = 1 word)
     const wpm = Math.floor(gameState.correctChars / 5 / (gameState.selectedTime));
@@ -2191,7 +2194,7 @@ window.addEventListener('load', async function() {
     const soundToggle = document.getElementById('soundToggle');
     if (soundToggle) {
         soundToggle.classList.add('audio-loading');
-        soundToggle.innerHTML = '<i class="fas fa-spinner"></i>';
+        // soundToggle.innerHTML = '<i class="fas fa-spinner"></i>';
     }
     
     // Initialize SoundManager
@@ -2290,7 +2293,7 @@ window.addEventListener('load', async function() {
     const soundToggle = document.getElementById('soundToggle');
     if (soundToggle) {
         soundToggle.classList.add('audio-loading');
-        soundToggle.innerHTML = '<i class="fas fa-spinner"></i>';
+        // soundToggle.innerHTML = '<i class="fas fa-spinner"></i>';
     }
     
     // Initialize SoundManager
